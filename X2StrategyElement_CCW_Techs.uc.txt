@@ -1,0 +1,516 @@
+class X2StrategyElement_CCW_Techs extends X2StrategyElement;
+
+static function array<X2DataTemplate> CreateTemplates()
+{
+	local array<X2DataTemplate> Techs;
+
+	Techs.AddItem(CreateRepeatableChosenRifleTemplate());
+	Techs.AddItem(CreateRepeatableChosenShotgunTemplate());
+	Techs.AddItem(CreateRepeatableChosenSwordTemplate());
+	Techs.AddItem(CreateRepeatableChosenSniperRifleTemplate());
+	Techs.AddItem(CreateRepeatableChosenSniperPistolTemplate());
+
+	return Techs;
+	`log("=" $ GetFuncName() $ "=", bDebugLog, 'XRepeatableChosenRifle');
+	History=`XCOMHISTORY;
+}
+
+//---------------------------------------------------------------------------------------
+// Helper function for calculating project time
+static function int StafferXDays(int iNumScientists, int iNumDays)
+{
+	return (iNumScientists * 5) * (24 * iNumDays); // Scientists at base skill level
+}
+
+static function X2DataTemplate CreateRepeatableChosenRifleTemplate()
+{
+	local X2TechTemplate Template;
+	local ArtifactCost Resources;
+	local StrategyRequirement AltReq;
+	local ArtifactCost Artifacts;
+
+	`CREATE_X2TEMPLATE(class'X2TechTemplate', Template, 'RepeatableChosenRifle');
+	Template.PointsToComplete = StafferXDays(1, 5);
+	Template.SortingTier = 1;
+	Template.strImage = "img:///UILibrary_XPACK_StrategyImages.IC_ChosenRifle";
+	Template.bRepeatable = true;
+	Template.bProvingGround = true;
+	Template.ResearchCompletedFn = GiveChosenRifle;//class'X2StrategyElement_DefaultTechs'.static.GiveItems;
+
+	// Item Rewards
+	Template.ItemRewards.AddItem('ChosenRifle_CV_Schematic'); // Giving the schematic will also give the weapon
+
+	// Requirements
+	Template.Requirements.RequiredTechs.AddItem('ExperimentalChosenWeapons');
+	Template.Requirements.RequiredItems.AddItem('ChosenRifle_CV_Schematic');
+	Template.Requirements.bVisibleIfPersonnelGatesNotMet = true;
+	Template.Requirements.RequiredEngineeringScore = 10;
+
+
+	// Cost
+	Resources.ItemTemplateName = 'Supplies';
+	Resources.Quantity = 70;
+	Template.Cost.ResourceCosts.AddItem(Resources);
+
+	Artifacts.ItemTemplateName = 'EleriumCore';
+	Artifacts.Quantity = 1;
+	Template.Cost.ArtifactCosts.AddItem(Artifacts);
+
+	return Template;
+}
+
+static function X2DataTemplate CreateRepeatableChosenShotgunTemplate()
+{
+	local X2TechTemplate Template;
+	local ArtifactCost Resources;
+	local StrategyRequirement AltReq;
+	local ArtifactCost Artifacts;
+
+	`CREATE_X2TEMPLATE(class'X2TechTemplate', Template, 'RepeatableChosenShotgun');
+	Template.PointsToComplete = StafferXDays(1, 5);
+	Template.SortingTier = 1;
+	Template.strImage = "img:///UILibrary_XPACK_StrategyImages.IC_ChosenShotgun";
+	Template.bRepeatable = true;
+	Template.bProvingGround = true;
+	Template.ResearchCompletedFn = GiveChosenShotguns;
+
+	// Item Rewards
+	Template.ItemRewards.AddItem('ChosenShotgun_CV_Schematic'); // Giving the schematic will also give the weapon
+
+	// Requirements
+	Template.Requirements.RequiredTechs.AddItem('ExperimentalChosenWeapons');
+	Template.Requirements.RequiredItems.AddItem('ChosenShotgun_CV_Schematic');
+	Template.Requirements.bVisibleIfPersonnelGatesNotMet = true;
+	Template.Requirements.RequiredEngineeringScore = 10;
+
+
+	// Cost
+	Resources.ItemTemplateName = 'Supplies';
+	Resources.Quantity = 60;
+	Template.Cost.ResourceCosts.AddItem(Resources);
+
+	Artifacts.ItemTemplateName = 'EleriumCore';
+	Artifacts.Quantity = 1;
+	Template.Cost.ArtifactCosts.AddItem(Artifacts);
+
+	return Template;
+}
+
+static function X2DataTemplate CreateRepeatableChosenSwordTemplate()
+{
+	local X2TechTemplate Template;
+	local ArtifactCost Resources;
+	local StrategyRequirement AltReq;
+	local ArtifactCost Artifacts;
+
+	`CREATE_X2TEMPLATE(class'X2TechTemplate', Template, 'RepeatableChosenSword');
+	Template.PointsToComplete = StafferXDays(1, 5);
+	Template.SortingTier = 1;
+	Template.strImage = "img:///UILibrary_XPACK_StrategyImages.IC_ChosenSword";
+	Template.bRepeatable = true;
+	Template.bProvingGround = true;
+	Template.ResearchCompletedFn = GiveChosenSword;
+
+	// Item Rewards
+	Template.ItemRewards.AddItem('ChosenSword_CV_Schematic'); // Giving the schematic will also give the weapon
+
+	// Requirements
+	Template.Requirements.RequiredTechs.AddItem('ExperimentalChosenWeapons');
+	Template.Requirements.RequiredItems.AddItem('ChosenSword_CV_Schematic');
+	Template.Requirements.bVisibleIfPersonnelGatesNotMet = true;
+	Template.Requirements.RequiredEngineeringScore = 10;
+
+
+	// Cost
+	Resources.ItemTemplateName = 'Supplies';
+	Resources.Quantity = 50;
+	Template.Cost.ResourceCosts.AddItem(Resources);
+
+	Artifacts.ItemTemplateName = 'EleriumCore';
+	Artifacts.Quantity = 1;
+	Template.Cost.ArtifactCosts.AddItem(Artifacts);
+
+	return Template;
+}
+
+static function X2DataTemplate CreateRepeatableChosenSniperRifleTemplate()
+{
+	local X2TechTemplate Template;
+	local ArtifactCost Resources;
+	local StrategyRequirement AltReq;
+	local ArtifactCost Artifacts;
+
+	`CREATE_X2TEMPLATE(class'X2TechTemplate', Template, 'RepeatableChosenSniperRifle');
+	Template.PointsToComplete = StafferXDays(1, 5);
+	Template.SortingTier = 1;
+	Template.strImage = "img:///UILibrary_XPACK_StrategyImages.IC_ChosenSniperRifle";
+	Template.bRepeatable = true;
+	Template.bProvingGround = true;
+	Template.ResearchCompletedFn = class'X2StrategyElement_DefaultTechs'.static.GiveItems;
+
+	// Item Rewards
+	Template.ItemRewards.AddItem('ChosenSniperRifle_CV_Schematic'); // Giving the schematic will also give the weapon
+
+	// Requirements
+	Template.Requirements.RequiredTechs.AddItem('ExperimentalChosenWeapons');
+	Template.Requirements.RequiredItems.AddItem('ChosenSniperRifle_CV_Schematic');
+	Template.Requirements.bVisibleIfPersonnelGatesNotMet = true;
+	Template.Requirements.RequiredEngineeringScore = 10;
+
+
+	// Cost
+	Resources.ItemTemplateName = 'Supplies';
+	Resources.Quantity = 50;
+	Template.Cost.ResourceCosts.AddItem(Resources);
+
+	Artifacts.ItemTemplateName = 'EleriumCore';
+	Artifacts.Quantity = 1;
+	Template.Cost.ArtifactCosts.AddItem(Artifacts);
+
+	return Template;
+}
+
+static function X2DataTemplate CreateRepeatableChosenSniperPistolTemplate()
+{
+	local X2TechTemplate Template;
+	local ArtifactCost Resources;
+	local StrategyRequirement AltReq;
+	local ArtifactCost Artifacts;
+
+	`CREATE_X2TEMPLATE(class'X2TechTemplate', Template, 'RepeatableChosenSniperPistol');
+	Template.PointsToComplete = StafferXDays(1, 5);
+	Template.SortingTier = 1;
+	Template.strImage = "img:///UILibrary_XPACK_StrategyImages.IC_ChosenSniperPistol";
+	Template.bRepeatable = true;
+	Template.bProvingGround = true;
+	Template.ResearchCompletedFn = class'X2StrategyElement_DefaultTechs'.static.GiveItems;
+
+	// Item Rewards
+	Template.ItemRewards.AddItem('ChosenSniperPistol_CV_Schematic'); // Giving the schematic will also give the weapon
+
+	// Requirements
+	Template.Requirements.RequiredTechs.AddItem('ExperimentalChosenWeapons');
+	Template.Requirements.RequiredItems.AddItem('ChosenSniperPistol_CV_Schematic');
+	Template.Requirements.bVisibleIfPersonnelGatesNotMet = true;
+	Template.Requirements.RequiredEngineeringScore = 10;
+
+
+	// Cost
+	Resources.ItemTemplateName = 'Supplies';
+	Resources.Quantity = 50;
+	Template.Cost.ResourceCosts.AddItem(Resources);
+
+	Artifacts.ItemTemplateName = 'EleriumCore';
+	Artifacts.Quantity = 1;
+	Template.Cost.ArtifactCosts.AddItem(Artifacts);
+
+	return Template;
+}
+
+static function GiveChosenRifle(XComGameState NewGameState, XComGameState_Tech TechState)
+{
+	local X2ItemTemplateManager ItemTemplateManager;
+	local X2ItemTemplate ItemTemplate;
+	//local array<name> ItemRewards;
+	local name ItemName;
+	local XComGameState_HeadquartersXCom XComHQ;	
+	local XComGameStateHistory History;
+
+	History = `XCOMHISTORY;
+	XComHQ = XComGameState_HeadquartersXCom(History.GetSingleGameStateObjectForClass(class'XComGameState_HeadquartersXCom'));
+
+	ItemTemplateManager = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
+	
+	TechState.ItemRewards.Length = 0; // Reset the item rewards array in case the tech is repeatable
+
+	//ItemRewards = TechState.GetMyTemplate().ItemRewards;
+
+	if(!XComHQ.HasItemByName('ChosenSword_MG') && !XComHQ.HasItemByName('ChosenSword_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSword_CV');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenSword_MG') && !XComHQ.HasItemByName('ChosenSword_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSword_MG');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenSword_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSword_BM');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	TechState.bSeenResearchCompleteScreen = false; // Reset the research report for techs that are repeatable
+}
+
+static function GiveHunterAxes(XComGameState NewGameState, XComGameState_Tech TechState)
+{
+	local X2ItemTemplateManager ItemTemplateManager;
+	local X2ItemTemplate ItemTemplate;
+	//local array<name> ItemRewards;
+	local name ItemName;
+	local XComGameState_HeadquartersXCom XComHQ;	
+	local XComGameStateHistory History;
+
+	History = `XCOMHISTORY;
+	XComHQ = XComGameState_HeadquartersXCom(History.GetSingleGameStateObjectForClass(class'XComGameState_HeadquartersXCom'));
+
+	ItemTemplateManager = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
+	
+	TechState.ItemRewards.Length = 0; // Reset the item rewards array in case the tech is repeatable
+
+	//ItemRewards = TechState.GetMyTemplate().ItemRewards;
+
+	if(!XComHQ.HasItemByName('ChosenShotgun_MG') && !XComHQ.HasItemByName('ChosenShotgun_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenShotgun_CV');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenShotgun_MG') && !XComHQ.HasItemByName('ChosenShotgun_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenShotgun_MG');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenShotgun_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenShotgun_BM');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	TechState.bSeenResearchCompleteScreen = false; // Reset the research report for techs that are repeatable
+}
+
+
+static function GiveChosenSniperRifle(XComGameState NewGameState, XComGameState_Tech TechState)
+{
+	local X2ItemTemplateManager ItemTemplateManager;
+	local X2ItemTemplate ItemTemplate;
+	//local array<name> ItemRewards;
+	local name ItemName;
+	local XComGameState_HeadquartersXCom XComHQ;	
+	local XComGameStateHistory History;
+
+	History = `XCOMHISTORY;
+	XComHQ = XComGameState_HeadquartersXCom(History.GetSingleGameStateObjectForClass(class'XComGameState_HeadquartersXCom'));
+
+	ItemTemplateManager = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
+	
+	TechState.ItemRewards.Length = 0; // Reset the item rewards array in case the tech is repeatable
+
+	//ItemRewards = TechState.GetMyTemplate().ItemRewards;
+
+	if(!XComHQ.HasItemByName('ChosenSniperRifle_MG') && !XComHQ.HasItemByName('ChosenSniperRifle_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSniperRifle_CV');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenSniperRifle_MG') && !XComHQ.HasItemByName('ChosenSniperRifle_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSniperRifle_MG');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenSniperRifle_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSniperRifle_BM');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	TechState.bSeenResearchCompleteScreen = false; // Reset the research report for techs that are repeatable
+}
+
+
+
+static function GiveChosenSniperPistol(XComGameState NewGameState, XComGameState_Tech TechState)
+{
+	local X2ItemTemplateManager ItemTemplateManager;
+	local X2ItemTemplate ItemTemplate;
+	//local array<name> ItemRewards;
+	local name ItemName;
+	local XComGameState_HeadquartersXCom XComHQ;	
+	local XComGameStateHistory History;
+
+	History = `XCOMHISTORY;
+	XComHQ = XComGameState_HeadquartersXCom(History.GetSingleGameStateObjectForClass(class'XComGameState_HeadquartersXCom'));
+
+	ItemTemplateManager = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
+	
+	TechState.ItemRewards.Length = 0; // Reset the item rewards array in case the tech is repeatable
+
+	//ItemRewards = TechState.GetMyTemplate().ItemRewards;
+
+	if(!XComHQ.HasItemByName('ChosenSniperPistol_MG') && !XComHQ.HasItemByName('ChosenSniperPistol_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSniperPistol_CV');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenSniperPistol_MG') && !XComHQ.HasItemByName('ChosenSniperPistol_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSniperPistol_MG');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenSniperPistol_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenSniperPistol_BM');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	TechState.bSeenResearchCompleteScreen = false; // Reset the research report for techs that are repeatable
+}
+
+
+
+
+
+
+static function GiveChosenRifle(XComGameState NewGameState, XComGameState_Tech TechState)
+{
+	local X2ItemTemplateManager ItemTemplateManager;
+	local X2ItemTemplate ItemTemplate;
+	//local array<name> ItemRewards;
+	local name ItemName;
+	local XComGameState_HeadquartersXCom XComHQ;	
+	local XComGameStateHistory History;
+
+	History = `XCOMHISTORY;
+	XComHQ = XComGameState_HeadquartersXCom(History.GetSingleGameStateObjectForClass(class'XComGameState_HeadquartersXCom'));
+
+	ItemTemplateManager = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
+	
+	TechState.ItemRewards.Length = 0; // Reset the item rewards array in case the tech is repeatable
+
+	//ItemRewards = TechState.GetMyTemplate().ItemRewards;
+
+	if(!XComHQ.HasItemByName('ChosenRifle_MG') && !XComHQ.HasItemByName('ChosenRifle_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenRifle_CV');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenRifle_MG') && !XComHQ.HasItemByName('ChosenRifle_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenRifle_MG');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	if(XComHQ.HasItemByName('ChosenRifle_BM'))
+	{
+		ItemTemplate = ItemTemplateManager.FindItemTemplate('ChosenRifle_BM');
+		class'XComGameState_HeadquartersXCom'.static.GiveItem(NewGameState, ItemTemplate);
+
+		if (TechState.GetMyTemplate().bProvingGround)
+		{
+			// Proving Ground projects don't have research reports, but display item rewards on the Geoscape, so save them here
+			TechState.ItemRewards.AddItem(ItemTemplate);
+		}
+
+	}
+
+	TechState.bSeenResearchCompleteScreen = false; // Reset the research report for techs that are repeatable
+}

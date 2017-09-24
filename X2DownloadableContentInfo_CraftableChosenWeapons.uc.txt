@@ -1,0 +1,97 @@
+//---------------------------------------------------------------------------------------
+//  FILE:   XComDownloadableContentInfo_CraftableChosenWeapons.uc                                    
+//           
+//	Use the X2DownloadableContentInfo class to specify unique mod behavior when the 
+//  player creates a new campaign or loads a saved game.
+//  
+//---------------------------------------------------------------------------------------
+//  Copyright (c) 2016 Firaxis Games, Inc. All rights reserved.
+//---------------------------------------------------------------------------------------
+
+class X2DownloadableContentInfo_CraftableChosenWeapons extends X2DownloadableContentInfo;
+
+/// <summary>
+/// This method is run if the player loads a saved game that was created prior to this DLC / Mod being installed, and allows the 
+/// DLC / Mod to perform custom processing in response. This will only be called once the first time a player loads a save that was
+/// create without the content installed. Subsequent saves will record that the content was installed.
+/// </summary>
+static event OnLoadedSavedGame()
+{}
+
+/// <summary>
+/// Called when the player starts a new campaign while this DLC / Mod is installed
+/// </summary>
+static event InstallNewCampaign(XComGameState StartState)
+{}
+
+static event OnLoadedSavedGameToStrategy()
+{
+	UpdateResearch();
+}
+
+static function UpdateResearch()
+{
+	local XComGameStateHistory History;
+	local XComGameState NewGameState;
+	local X2TechTemplate TechTemplate;
+	local XComGameState_Tech TechState;
+	local X2StrategyElementTemplateManager	StratMgr;
+
+	//In this method, we demonstrate functionality that will add ExampleWeapon to the player's inventory when loading a saved
+	//game. This allows players to enjoy the content of the mod in campaigns that were started without the mod installed.
+	StratMgr = class'X2StrategyElementTemplateManager'.static.GetStrategyElementTemplateManager();
+	History = `XCOMHISTORY;	
+
+	//Create a pending game state change
+	NewGameState = class'XComGameStateContext_ChangeContainer'.static.CreateChangeState("Adding Research Templates");
+
+
+	//Find tech template
+	if ( !IsResearchInHistory('RepeatableChosenRifle') )
+	{
+	TechTemplate = X2TechTemplate(StratMgr.FindStrategyElementTemplate('RepeatableChosenRifle'));
+	NewGameState.CreateNewStateObject(class'XComGameState_Tech', TechTemplate);
+	}
+	if ( !IsResearchInHistory('RepeatableChosenShotgun') )
+	{
+	TechTemplate = X2TechTemplate(StratMgr.FindStrategyElementTemplate('RepeatableChosenShotgun'));
+	NewGameState.CreateNewStateObject(class'XComGameState_Tech', TechTemplate);
+	}
+	if ( !IsResearchInHistory('RepeatableChosenSword') )
+	{
+	TechTemplate = X2TechTemplate(StratMgr.FindStrategyElementTemplate('RepeatableChosenSword'));
+	NewGameState.CreateNewStateObject(class'XComGameState_Tech', TechTemplate);
+	}
+	if ( !IsResearchInHistory('RepeatableChosenSniperRifle') )
+	{
+	TechTemplate = X2TechTemplate(StratMgr.FindStrategyElementTemplate('RepeatableChosenSniperRifle'));
+	NewGameState.CreateNewStateObject(class'XComGameState_Tech', TechTemplate);
+	}
+	if ( !IsResearchInHistory('RepeatableChosenSniperPistol') )
+	{
+	TechTemplate = X2TechTemplate(StratMgr.FindStrategyElementTemplate('RepeatableChosenSniperPistol'));
+	NewGameState.CreateNewStateObject(class'XComGameState_Tech', TechTemplate);
+	}
+
+	//Commit the state change into the history.
+	History.AddGameStateToHistory(NewGameState);
+
+	//Logging
+
+}
+
+
+static function bool IsResearchInHistory(name ResearchName)
+{
+	// Check if we've already injected the tech templates
+	local XComGameState_Tech	TechState;
+	
+	foreach `XCOMHISTORY.IterateByClassType(class'XComGameState_Tech', TechState)
+	{
+		if ( TechState.GetMyTemplateName() == ResearchName )
+		{
+			return true;
+		}
+	}
+	return false;
+}

@@ -1,0 +1,2 @@
+[CraftableChosenWeapons.X2DownloadableContentInfo_CraftableChosenWeapons]
+DLCIdentifier="CraftableChosenWeapons"

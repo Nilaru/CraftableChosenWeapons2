@@ -1,0 +1,47 @@
+[RepeatableChosenRifle X2TechTemplate]
+DisplayName="Build Disruptor Rifle"
+Summary="We now have a more thorough understanding of this weapon, and can produce it ourselves, if albeit with more rare supplies than we were hoping."
+
+[RepeatableChosenShotgun X2TechTemplate]
+DisplayName="Build Arashi"
+Summary="We now have a more thorough understanding of this weapon, and can produce it ourselves, if albeit with more rare supplies than we were hoping."
+
+[RepeatableChosenSword X2TechTemplate]
+DisplayName="Build Katana"
+Summary="We now have a more thorough understanding of this weapon, and can produce it ourselves, if albeit with more rare supplies than we were hoping." 
+
+[RepeatableChosenSniperRifle X2TechTemplate]
+DisplayName="Build Darklance"
+Summary="We now have a more thorough understanding of this weapon, and can produce it ourselves, if albeit with more rare supplies than we were hoping."
+
+[RepeatableChosenSniperPistol X2TechTemplate]
+DisplayName="Build Darkclaw"
+Summary="We now have a more thorough understanding of this weapon, and can produce it ourselves, if albeit with more rare supplies than we were hoping."
+
+
+
+[ChosenRifle X2TechTemplate]
+DisplayName="Disruptor Rifle"
+Summary="A powerful rife belonging to the Chosen Warlock, this rifle is the bane of those who use psychic abilities."
+
+[ChosenShotgun X2TechTemplate]
+DisplayName="Arashi"
+Summary="The Chosen Assassin's failsafe weapon, in close quarters it is no less dangerous than her sword."
+
+[ChosenSword X2TechTemplate]
+DisplayName="Katana"
+Summary="The prized weapon of the Chosen Assassin, forged by hands not of this earth. It is said to never miss its intended target.
+
+[ChosenSniperRifle X2TechTemplate]
+DisplayName="Darklance"
+Summary="This rifle belonging to the Chosen Hunter has probably seen more death than we can possibly imagine."
+
+[ChosenSniperPistal X2TechTemplate]
+DisplayName="Darkclaw"
+Summary="Although it would almost appear to mimic the design of traditional revolvers found on Earth, the technology involved here is anything but conventional."
+
+[ExperimentalChosenWeapons X2TechTemplate]
+DisplayName="Experimental Chosen Weapons"
+Summary="We've recovered the original schematics that the Elders used to create the weapons of their favored Chosen. These weapons are powerful and will require extensive study to understand."
+CodeName="Nephelem"
+LongDescription="We've recovered the original schematics that the Elders used to create the weapons of their favored Chosen. These weapons are powerful and will require extensive study to understand. -R. Tygan"
